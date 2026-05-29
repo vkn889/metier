@@ -85,6 +85,11 @@ export default function LoginPage() {
           {state.error}
         </div>
       )}
+      {state.info && (
+        <div role="status" className="mb-4 p-3 bg-tertiary-500/15 border border-tertiary-500/30 rounded-xl text-tertiary-300 text-sm">
+          {state.info}
+        </div>
+      )}
 
       <form action={action} className="space-y-4">
         <div>

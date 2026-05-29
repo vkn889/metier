@@ -10,9 +10,8 @@ export async function GET(request: Request) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      // Check onboarding status
-        // Only auto-redirect to onboarding for the default dashboard destination,
-      // not for explicit next params like /update-password (password reset flow)
+      // For the default dashboard destination, check onboarding status.
+      // Explicit next params (e.g. /update-password) bypass this check.
       if (next === '/dashboard') {
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
