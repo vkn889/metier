@@ -11,16 +11,20 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       // Check onboarding status
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('onboarding_complete')
-          .eq('id', user.id)
-          .single()
+        // Only auto-redirect to onboarding for the default dashboard destination,
+      // not for explicit next params like /update-password (password reset flow)
+      if (next === '/dashboard') {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('onboarding_complete')
+            .eq('id', user.id)
+            .single()
 
-        if (profile?.onboarding_complete === false) {
-          return NextResponse.redirect(`${origin}/onboarding`)
+          if (profile?.onboarding_complete === false) {
+            return NextResponse.redirect(`${origin}/onboarding`)
+          }
         }
       }
       return NextResponse.redirect(`${origin}${next}`)

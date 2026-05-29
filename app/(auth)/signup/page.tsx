@@ -81,8 +81,11 @@ export default function SignupPage() {
         </p>
       </div>
 
+      {/* Google sign-up — disabled until Google provider is configured in Supabase */}
       <button onClick={handleGoogleSignIn}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white/10 border border-white/15 rounded-xl text-white text-sm font-medium hover:bg-white/15 active:bg-white/20 transition-all duration-150 cursor-pointer mb-6 focus:outline-none focus:ring-2 focus:ring-white/30"
+        disabled
+        title="Google sign-up coming soon"
+        className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white/5 border border-white/8 rounded-xl text-neutral-600 text-sm font-medium cursor-not-allowed mb-6 opacity-50"
       >
         <svg className="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>

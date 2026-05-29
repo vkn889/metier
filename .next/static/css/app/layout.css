@@ -1186,6 +1186,9 @@ p, li { line-height: 1.65; }
 .cursor-pointer{
   cursor: pointer;
 }
+.cursor-not-allowed{
+  cursor: not-allowed;
+}
 .select-none{
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -2243,6 +2246,9 @@ p, li { line-height: 1.65; }
 }
 .opacity-\[0\.04\]{
   opacity: 0.04;
+}
+.opacity-50{
+  opacity: 0.5;
 }
 .\!shadow-glow-sm{
   --tw-shadow: 0 0 16px rgba(79,110,247,0.25) !important;

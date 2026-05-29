@@ -105,6 +105,29 @@ export async function signOut() {
   redirect('/')
 }
 
+export async function updatePassword(_prevState: AuthState, formData: FormData): Promise<AuthState> {
+  const password = formData.get('password') as string
+  const confirm = formData.get('confirmPassword') as string
+
+  if (password !== confirm) return { error: 'Passwords do not match.' }
+
+  const parsed = z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Must contain an uppercase letter')
+    .regex(/\d/, 'Must contain a number')
+    .regex(/[!@#$%^&*]/, 'Must contain a special character')
+    .safeParse(password)
+
+  if (!parsed.success) return { error: parsed.error.errors[0].message }
+
+  const supabase = await createClient()
+  const { error } = await supabase.auth.updateUser({ password: parsed.data })
+  if (error) return { error: error.message }
+
+  revalidatePath('/', 'layout')
+  redirect('/dashboard')
+}
+
 export async function saveOnboarding(prevState: AuthState, formData: FormData): Promise<AuthState> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
