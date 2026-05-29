@@ -41,7 +41,7 @@ export async function signUp(prevState: AuthState, formData: FormData): Promise<
   }
 
   const supabase = await createClient()
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
@@ -59,6 +59,11 @@ export async function signUp(prevState: AuthState, formData: FormData): Promise<
     return { error: error.message }
   }
 
+  // If email confirmation is required, there will be no session yet
+  if (!data.session) {
+    return { error: 'Account created! Please check your email to confirm before logging in.' }
+  }
+
   redirect('/onboarding')
 }
 
@@ -74,7 +79,7 @@ export async function logIn(prevState: AuthState, formData: FormData): Promise<A
   }
 
   const supabase = await createClient()
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
   })
@@ -84,8 +89,14 @@ export async function logIn(prevState: AuthState, formData: FormData): Promise<A
     return { error: 'Invalid email or password.' }
   }
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('onboarding_complete')
+    .eq('id', data.user.id)
+    .single()
+
   revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  redirect(profile?.onboarding_complete === false ? '/onboarding' : '/dashboard')
 }
 
 export async function signOut() {

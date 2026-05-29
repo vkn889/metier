@@ -22,7 +22,7 @@ export default function SimulationPage() {
     <div className="p-6 lg:p-8 max-w-5xl">
       {/* Header */}
       <div className="flex items-center gap-2 text-sm text-neutral-400 mb-6">
-        <Link href="/app/library" className="hover:text-white transition-colors duration-150">Library</Link>
+        <Link href="/library" className="hover:text-white transition-colors duration-150">Library</Link>
         <ChevronRight className="w-4 h-4" />
         <span className="text-white">Management Trainee</span>
         <ChevronRight className="w-4 h-4" />
@@ -185,7 +185,7 @@ Professional tone required. Maximum 2 pages."
             </div>
           </div>
 
-          <Link href="/app/simulation" className="btn-primary" onClick={() => setSubmitted(false)}>
+          <Link href="/simulation" className="btn-primary" onClick={() => setSubmitted(false)}>
             Continue to Task 3 <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

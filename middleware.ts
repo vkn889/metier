@@ -37,7 +37,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  // Redirect authenticated users away from auth pages
+  // Redirect authenticated users away from auth pages — copy session cookies so the
+  // refreshed token isn't lost when we return a redirect instead of supabaseResponse
   if (user && AUTH_PATHS.some(p => path === p)) {
     const profile = await supabase
       .from('profiles')
@@ -46,7 +47,11 @@ export async function middleware(request: NextRequest) {
       .single()
 
     const dest = profile.data?.onboarding_complete === false ? '/onboarding' : '/dashboard'
-    return NextResponse.redirect(new URL(dest, request.url))
+    const redirectResponse = NextResponse.redirect(new URL(dest, request.url))
+    supabaseResponse.cookies.getAll().forEach(cookie =>
+      redirectResponse.cookies.set(cookie)
+    )
+    return redirectResponse
   }
 
   return supabaseResponse
