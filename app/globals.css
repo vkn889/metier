@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Domine:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #1A1A2E;
+  --color-secondary: #2E3A59;
+  --color-tertiary: #4F6EF7;
+  --color-neutral: #F4F2EE;
+  --color-dark: #080812;
+}
+
+* { box-sizing: border-box; padding: 0; margin: 0; }
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-dark);
+  color: var(--color-neutral);
+  font-family: 'Lexend', system-ui, sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── Global heading style: Lexend Black ────────────────────────────── */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lexend', system-ui, sans-serif;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  p, li { line-height: 1.65; }
+}
+
+@layer components {
+  /* Primary CTA */
+  .btn-primary {
+    @apply bg-tertiary-500 text-white font-headline font-bold px-6 py-3 rounded-xl hover:bg-tertiary-400 active:bg-tertiary-600 transition-all duration-200 cursor-pointer inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-tertiary-400 focus:ring-offset-2 focus:ring-offset-[#080812] shadow-[0_0_24px_rgba(79,110,247,0.25)] hover:shadow-[0_0_36px_rgba(79,110,247,0.4)];
+  }
+  /* Secondary / outlined */
+  .btn-secondary {
+    @apply bg-white/[0.08] text-white font-headline font-bold px-6 py-3 rounded-xl border border-white/[0.15] hover:bg-white/[0.12] hover:border-white/[0.25] active:bg-white/[0.20] transition-all duration-200 cursor-pointer inline-flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-white/[0.30] focus:ring-offset-2 focus:ring-offset-[#080812];
+  }
+
+  /* App sidebar link */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-neutral-500 hover:text-white hover:bg-white/[0.08] transition-all duration-150 cursor-pointer;
+  }
+  .sidebar-link-active {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-white bg-tertiary-500/[0.15] border border-tertiary-500/[0.25];
+  }
+
+  /* Dark card */
+  .card-dark {
+    @apply bg-white/[0.03] border border-white/[0.08] rounded-2xl;
+  }
+  /* Light card */
+  .card-light {
+    @apply bg-white border border-neutral-200 rounded-2xl shadow-sm;
+  }
+
+  /* Section label (tiny eyebrow) */
+  .section-label {
+    @apply text-[10px] font-bold tracking-[0.25em] uppercase text-tertiary-400 font-label;
+  }
+}
+
+@layer utilities {
+  .font-headline { font-family: 'Lexend', system-ui, sans-serif; }
+  .font-body     { font-family: 'Libre Caslon Text', Georgia, serif; }
+  .font-label    { font-family: 'Domine', Georgia, serif; }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #4F6EF7 0%, #A5B8FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Blue glow helpers */
+  .glow-effect  { box-shadow: 0 0 40px rgba(79,110,247,0.3), 0 0 80px rgba(79,110,247,0.12); }
+  .shadow-glow-blue { box-shadow: 0 0 24px rgba(79,110,247,0.35); }
+  .shadow-glow-sm   { box-shadow: 0 0 16px rgba(79,110,247,0.25); }
+
+  /* Scrollbars */
+  .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+  .scrollbar-hide::-webkit-scrollbar { display:none; }
+
+  .app-scroll::-webkit-scrollbar { width: 3px; }
+  .app-scroll::-webkit-scrollbar-track { background: transparent; }
+  .app-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .bg-white\/8  { background-color: rgba(255,255,255,0.08); }
+  .bg-white\/12 { background-color: rgba(255,255,255,0.12); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
